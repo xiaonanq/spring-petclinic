@@ -13,6 +13,6 @@ node {
         sh "${mvn}/bin/mvn package"
     }
     stage('Run Project'){
-        sh "java -jar -Dserver.port=50000 target/spring-petclinic-3.0.0-SNAPSHOT.jar"
+        sh "java -jar -Dserver.port=50001 target/spring-petclinic-3.0.0-SNAPSHOT.jar"
     }
 }
