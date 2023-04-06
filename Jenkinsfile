@@ -17,9 +17,9 @@ node {
         sh "java -jar -Dserver.port=50001 target/spring-petclinic-3.0.0-SNAPSHOT.jar"
 
         // Wait for 5 minutes
-        sh "sleep 300"
+        //sh "sleep 300"
         
         // Send a termination signal to the Java process
-        sh "killall java"
+        //sh "killall java"
     }
 }
