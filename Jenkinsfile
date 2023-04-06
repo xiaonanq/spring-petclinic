@@ -15,11 +15,13 @@ node {
     stage('Run Project'){
         // Run project
         sh "java -jar -Dserver.port=50001 target/spring-petclinic-3.0.0-SNAPSHOT.jar"
-
+    }
+    stage('Run Project 5 mins'){
         // Wait for 5 minutes
-        //sh "sleep 300"
-        
+        sh "sleep 300"
+    }
+    stage('Kill Project'){
         // Send a termination signal to the Java process
-        //sh "killall java"
+        sh "killall java"
     }
 }
