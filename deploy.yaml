@@ -1,4 +1,4 @@
-- hosts: web
+- hosts: containers
   tasks:
     - name: Copy the Petclinic app to the web server
       become: true
