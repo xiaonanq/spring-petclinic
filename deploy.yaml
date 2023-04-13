@@ -1,7 +1,7 @@
 - hosts: web
-become: true
-tasks:
-  - name: Copy the Petclinic app to the web server
-    copy: src=/var/lib/jenkins/workspace/petclinic-app/target/spring-petclinic-3.0.0-SNAPSHOT.jar dest=/var/lib/tomcat9/webapps/
-  - name: Restart Tomcat
-    service: name=tomcat9 state=restarted
+  tasks:
+    - name: Copy the Petclinic app to the web server
+      become: true
+      copy: src=/var/lib/jenkins/workspace/petclinic-app/target/spring-petclinic-3.0.0-SNAPSHOT.jar dest=/var/lib/tomcat9/webapps/
+    - name: Restart Tomcat
+      service: name=tomcat9 state=restarted
