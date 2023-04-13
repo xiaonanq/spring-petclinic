@@ -20,4 +20,5 @@
         password: admin
         body_format: form-urlencoded
         body: "war=file:/tmp/app.war"
+        validate_certs: no
       delegate_to: "172.26.9.43"
