@@ -1,7 +1,23 @@
-- hosts: containers
+- name: Deploy web application
+  hosts: ansible
+  vars:
+    tomcat_host: tomcat
+    tomcat_port: 9090
+    war_file: /path/to/war/file
   tasks:
-    - name: Copy the Petclinic app to the web server
-      become: true
-      copy: src=/var/lib/jenkins/workspace/petclinic-app/target/spring-petclinic-3.0.0-SNAPSHOT.jar dest=/var/lib/tomcat9/webapps/
-    - name: Restart Tomcat
-      service: name=tomcat9 state=restarted
+    - name: Copy WAR file to Tomcat container
+      docker_copy:
+        src: "/var/jenkins_home/workspace/ansible-demo/target/spring-petclinic-3.0.0-SNAPSHOT.jar"
+        dest: /tmp/app.war
+        container: tomcat
+      delegate_to: "172.26.9.43"
+
+    - name: Deploy WAR file to Tomcat container
+      uri:
+        url: "http://172.26.9.43:9090/manager/text/deploy?path=/app&update=true"
+        method: POST
+        user: admin
+        password: admin
+        body_format: form-urlencoded
+        body: "war=file:/tmp/app.war"
+      delegate_to: "172.26.9.43"

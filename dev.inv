@@ -1,2 +1,0 @@
-[containers]
-petclinic-container ansible_connection=docker ansible_docker_extra_args="-H tcp://172.18.0.3:9090"
