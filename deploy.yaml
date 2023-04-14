@@ -2,9 +2,8 @@
   become: true
   tasks:
     - name: Copy jar file from Jenkins pipeline
-      fetch:
+      ansible.builtin.copy:
         src: "/var/jenkins_home/workspace/ansible-demo/target/spring-petclinic-3.0.0-SNAPSHOT.jar"
         dest: "/tmp/spring-petclinic-3.0.0-SNAPSHOT.jar"
-        flat: yes
     - name: Start Java application
       command: "java -jar /tmp/spring-petclinic-3.0.0-SNAPSHOT.jar"
