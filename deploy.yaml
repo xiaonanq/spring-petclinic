@@ -1,24 +1,10 @@
-- name: Deploy web application
-  hosts: ansible
-  vars:
-    tomcat_host: tomcat
-    tomcat_port: 9090
-    war_file: /path/to/war/file
+- hosts: webServer
+  become: true
   tasks:
-    - name: Copy WAR file to Tomcat container
-      docker_copy:
+    - name: Copy jar file from Jenkins pipeline
+      fetch:
         src: "/var/jenkins_home/workspace/ansible-demo/target/spring-petclinic-3.0.0-SNAPSHOT.jar"
-        dest: /tmp/app.war
-        container: tomcat
-      delegate_to: "172.26.9.43"
-
-    - name: Deploy WAR file to Tomcat container
-      uri:
-        url: "http://172.26.9.43:9090/manager/text/deploy?path=/app&update=true"
-        method: POST
-        user: admin
-        password: admin
-        body_format: form-urlencoded
-        body: "war=file:/tmp/app.war"
-        validate_certs: no
-      delegate_to: "172.26.9.43"
+        dest: "/tmp/spring-petclinic-3.0.0-SNAPSHOT.jar"
+        flat: yes
+    - name: Start Java application
+      command: "java -jar /tmp/spring-petclinic-3.0.0-SNAPSHOT.jar"
